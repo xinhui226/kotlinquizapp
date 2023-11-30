@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="error">#C30000</color>
+    <color name="success">#3CE10E</color>
+    <color name="dark_blue">#164863</color>
+    <color name="blue">#427D9D</color>
+    <color name="light_blue">#9BBEC8</color>
+    <color name="lightest_blue">#DDF2FD</color>
+    <color name="gray">#BABABA</color>
+    <color name="zinc">#494949</color>
+</resources>

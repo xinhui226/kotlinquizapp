@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/tabContainerFragment">
+    <fragment
+        android:id="@+id/tabContainerFragment"
+        android:name="com.xinhui.quizapp.ui.screen.tabContainer.TabContainerFragment"
+        android:label="Quiz App"
+        tools:layout="@layout/fragment_tab_container" >
+        <action
+            android:id="@+id/action_tabContainer_to_dashboardFragment"
+            app:destination="@id/dashboardFragmentFragment" />
+        <action
+            android:id="@+id/action_tabContainer_to_quizDetail"
+            app:destination="@id/quizDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragmentFragment"
+        android:name="com.xinhui.quizapp.ui.screen.dashboard.DashboardFragmentFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboard_to_manageQuiz"
+            app:destination="@id/manageQuizFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_studentGroup"
+            app:destination="@id/studentGroupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageQuizFragment"
+        android:name="com.xinhui.quizapp.ui.screen.manageQuiz.ManageQuizFragment"
+        android:label="Manage Quiz"
+        tools:layout="@layout/fragment_manage_quiz" >
+        <action
+            android:id="@+id/action_manageQuizFragment_to_addQuizFragment"
+            app:destination="@id/addQuizFragment" />
+        <action
+            android:id="@+id/action_manageQuiz_to_quizDetail"
+            app:destination="@id/quizDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentGroupFragment"
+        android:name="com.xinhui.quizapp.ui.screen.studentGroup.StudentGroupFragment"
+        android:label="Student Group"
+        tools:layout="@layout/fragment_student_group" >
+        <action
+            android:id="@+id/action_studentGroup_to_groupDetail"
+            app:destination="@id/groupDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editQuizFragment"
+        android:name="com.xinhui.quizapp.ui.screen.addEditQuiz.EditQuizFragment"
+        android:label="Edit Quiz"
+        tools:layout="@layout/fragment_add_edit_quiz">
+        <argument android:name="quizId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addQuizFragment"
+        android:name="com.xinhui.quizapp.ui.screen.addEditQuiz.AddQuizFragment"
+        android:label="Add Quiz"
+        tools:layout="@layout/fragment_add_edit_quiz"
+        />
+    <fragment
+        android:id="@+id/quizDetailFragment"
+        android:name="com.xinhui.quizapp.ui.screen.quizDetail.QuizDetailFragment"
+        android:label="Quiz Detail"
+        tools:layout="@layout/fragment_quiz_detail" >
+        <argument android:name="quizId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_quizDetail_to_editQuiz"
+            app:destination="@id/editQuizFragment" />
+        <action
+            android:id="@+id/action_quizDetail_to_playQuiz"
+            app:destination="@id/playQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupDetailFragment"
+        android:name="com.xinhui.quizapp.ui.screen.groupDetail.GroupDetailFragment"
+        android:label="Group Detail"
+        tools:layout="@layout/fragment_group_detail">
+        <argument android:name="groupId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_groupDetail_to_quizDetail"
+            app:destination="@id/quizDetailFragment" />
+        <action
+            android:id="@+id/action_groupDetail_to_searchUser"
+            app:destination="@id/searchUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchUserFragment"
+        android:name="com.xinhui.quizapp.ui.screen.searchUser.SearchUserFragment"
+        android:label="Search User"
+        tools:layout="@layout/fragment_search_user" >
+        <argument android:name="groupId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/playQuizFragment"
+        android:name="com.xinhui.quizapp.ui.screen.playQuiz.PlayQuizFragment"
+        android:label="Play Quiz"
+        tools:layout="@layout/fragment_play_quiz" >
+        <argument android:name="quizId"
+            app:argType="string" />
+    </fragment>
+</navigation>
