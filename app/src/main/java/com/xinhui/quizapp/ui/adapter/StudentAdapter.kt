@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.xinhui.quizapp.data.model.User
-import com.xinhui.quizapp.databinding.ItemGroupScoreQuizSimpleLayoutBinding
+import com.xinhui.quizapp.databinding.ItemStudentLayoutBinding
 
 class StudentAdapter(
     private var students: List<User>,
@@ -13,7 +13,7 @@ class StudentAdapter(
 ): RecyclerView.Adapter<StudentAdapter.ItemStudentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemStudentViewHolder {
-        val binding = ItemGroupScoreQuizSimpleLayoutBinding.inflate(
+        val binding = ItemStudentLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -32,7 +32,7 @@ class StudentAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ItemStudentViewHolder(private val binding: ItemGroupScoreQuizSimpleLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ItemStudentViewHolder(private val binding: ItemStudentLayoutBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(student: User){
             binding.run{
                 tvStudentName.text = student.name

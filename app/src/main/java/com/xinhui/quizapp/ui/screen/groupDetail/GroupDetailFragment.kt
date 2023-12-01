@@ -42,19 +42,30 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
             val action = GroupDetailFragmentDirections.actionGroupDetailToSearchUser(args.groupId)
             navController.navigate(action)
         }
+        binding.ivEdit.setOnClickListener {
+            showDialog()
+        }
     }
 
     override fun setupViewModelObserver() {
         super.setupViewModelObserver()
         lifecycleScope.launch{
             viewModel.group.collect {
-                viewModel.getStudents()
-                viewModel.getQuizzes()
                 binding.run {
-                    etGroupName.setText(it.name)
-                    tilGroupName.setEndIconOnClickListener {
-                        showDialog()
-                    }
+                tvGroupName.text = it.name
+                if (viewModel.user.value.id == it.createdBy){
+                    viewModel.getStudents()
+                    ivEdit.visibility = View.VISIBLE
+                    tvStudent.visibility = View.VISIBLE
+                    flStudents.visibility = View.VISIBLE
+                    btnAddStudent.visibility = View.VISIBLE
+                }else{
+                    tvStudent.visibility = View.GONE
+                    flStudents.visibility = View.GONE
+                    btnAddStudent.visibility = View.GONE
+                    ivEdit.visibility = View.GONE
+                }
+                if (it.id != null) viewModel.getQuizByGroup()
                 }
             }
         }
@@ -99,7 +110,7 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
         val inflater = layoutInflater
         builder.setTitle("Edit Group Name")
         val dialogLayout = inflater.inflate(R.layout.alert_dialog, null)
-        val editText  = dialogLayout.findViewById<EditText>(R.id.etGroupName)
+        val editText  = dialogLayout.findViewById<EditText>(R.id.tvGroupName)
         editText.visibility = View.VISIBLE
         editText.setText(viewModel.group.value.name)
         builder.setView(dialogLayout)

@@ -70,7 +70,7 @@ class StudentGroupFragment : BaseFragment<FragmentStudentGroupBinding>() {
         val inflater = layoutInflater
         builder.setTitle("Create New Group")
         val dialogLayout = inflater.inflate(R.layout.alert_dialog, null)
-        val editText  = dialogLayout.findViewById<EditText>(R.id.etGroupName)
+        val editText  = dialogLayout.findViewById<EditText>(R.id.tvGroupName)
         editText.visibility = View.VISIBLE
         builder.setView(dialogLayout)
         builder.setPositiveButton("OK") { _, _ ->

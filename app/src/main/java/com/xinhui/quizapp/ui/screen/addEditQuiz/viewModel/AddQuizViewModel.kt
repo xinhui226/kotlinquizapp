@@ -25,16 +25,19 @@ class AddQuizViewModel @Inject constructor(
     }
     override fun submit(quiz: Quiz) {
         viewModelScope.launch(Dispatchers.IO) {
-            val error = quizValidation(quiz)
-            if (error.isNullOrEmpty()){
-                _isLoading.emit(true)
-                safeApiCall{
-                    quizRepo.addNewQuiz(quiz)
-                }.let{
-                    _isLoading.emit(false)
-                    _success.emit("Quiz has been created.")
-                }
-            }else _error.emit(error)
+            if(quiz.groups.isEmpty()) _error.emit("Select at least one student group to assign.")
+            else{
+                val error = quizValidation(quiz)
+                if (error.isNullOrEmpty()) {
+                    _isLoading.emit(true)
+                    safeApiCall {
+                        quizRepo.addNewQuiz(quiz)
+                    }.let {
+                        _isLoading.emit(false)
+                        _success.emit("Quiz has been created.")
+                    }
+                } else _error.emit(error)
+            }
         }
     }
 }

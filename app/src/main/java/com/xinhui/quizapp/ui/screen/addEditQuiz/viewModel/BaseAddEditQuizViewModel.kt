@@ -26,7 +26,6 @@ abstract class BaseAddEditQuizViewModel: BaseViewModel(){
     fun quizValidation(quiz: Quiz):String? {
         return if(quiz.name.isEmpty()) "Quiz name can't be empty."
         else if(quiz.date.isEmpty()) "Select a date for quiz."
-        else if(quiz.groups.isEmpty()) "Select at least one student group to assign."
         else if (quiz.titles.isEmpty() &&
             quiz.options.isEmpty() &&
             quiz.answers.isEmpty() &&

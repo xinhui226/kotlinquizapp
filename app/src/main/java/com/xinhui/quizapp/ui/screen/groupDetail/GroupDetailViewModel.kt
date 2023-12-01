@@ -1,8 +1,6 @@
 package com.xinhui.quizapp.ui.screen.groupDetail
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.xinhui.quizapp.data.model.Account
 import com.xinhui.quizapp.data.model.Quiz
 import com.xinhui.quizapp.data.model.StudentGroup
 import com.xinhui.quizapp.data.model.User
@@ -14,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,6 +29,16 @@ class GroupDetailViewModel @Inject constructor(
     val students: StateFlow<List<User>> = _students
     protected val _quizzes: MutableStateFlow<List<Quiz>> = MutableStateFlow(emptyList())
     val quizzes: StateFlow<List<Quiz>> = _quizzes
+    protected val _user = MutableStateFlow(User(name = "anonymous", email = "anonymous", group = emptyList()))
+    val user: StateFlow<User> = _user
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            safeApiCall { userRepo.getUser() }?.let { user ->
+                _user.emit(user)
+            }
+        }
+    }
 
     fun getGroup(id:String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -55,19 +62,30 @@ class GroupDetailViewModel @Inject constructor(
         }
     }
 
-    fun getQuizzes() {
+//    fun getOwnQuizzes() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            safeApiCall {
+//                quizRepo.getOwnQuizzes().collect{
+//                    it.filter { quiz ->
+//                        (quiz.groups.contains(_group.value.id))
+//                    }.let {filterQuiz ->
+//                    _quizzes.emit(filterQuiz)
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    fun getQuizByGroup() {
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall {
-                quizRepo.getOwnQuizzes().collect{
-                    it.filter { quiz ->
-                        (quiz.groups.contains(_group.value.id))
-                    }.let {filterQuiz ->
-                    _quizzes.emit(filterQuiz)
-                    }
+                quizRepo.getQuizByGrp(_group.value.id!!).collect {
+                    _quizzes.emit(it)
                 }
             }
         }
     }
+
 
     fun updateGroupName(name:String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -92,5 +110,4 @@ class GroupDetailViewModel @Inject constructor(
             }
         }
     }
-
 }

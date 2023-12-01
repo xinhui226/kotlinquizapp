@@ -10,4 +10,5 @@ interface StudentGroupRepo {
     suspend fun addNewGroup(name: String)
     suspend fun updateStudentGroup(id: String,group: StudentGroup)
     suspend fun deleteGroup(id:String)
+    suspend fun getAllGroups(): Flow<MutableList<StudentGroup>>
 }

@@ -40,6 +40,28 @@ class StudentGroupRepoImpl(
         }
     }
 
+    override suspend fun getAllGroups() = callbackFlow{
+        val listener = getDBRef()
+            .addSnapshotListener { value, error ->
+                if(error != null) {
+                    throw error
+                }
+                val groups = mutableListOf<StudentGroup>()
+                value?.documents?.let { docs ->
+                    for (doc in docs){
+                        doc.data?.let {
+                            it["id"] = doc.id
+                            groups.add(StudentGroup.fromHash(it))
+                        }
+                    } //end for (doc in docs)
+                    trySend(groups)
+                } //end value?.documents?
+            } //end listener = dbref.addSnapshotListener
+        awaitClose{
+            listener.remove()
+        }
+    }
+
     override suspend fun getGroup(id: String): StudentGroup? {
         val doc = getDBRef().document(id).get().await()
         return doc.data?.let {
