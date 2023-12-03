@@ -1,12 +1,12 @@
 package com.xinhui.quizapp.data.repo
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.xinhui.quizapp.core.service.AuthService
 import com.xinhui.quizapp.data.model.Score
-import com.xinhui.quizapp.data.model.StudentGroup
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
@@ -30,6 +30,8 @@ class ScoreRepoImpl(
             query = query.whereArrayContainsAny("userGroups", user.group)
         }
         val listener = query
+            .orderBy("quizScore", Query.Direction.DESCENDING)
+            .orderBy(FieldPath.documentId())
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     throw error
