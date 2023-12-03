@@ -37,10 +37,15 @@ abstract class MostBaseFragment<T: ViewBinding>:Fragment() {
         }
         lifecycleScope.launch{
             viewModel.isLoading.collect{
+                val fragmentManager = requireActivity().supportFragmentManager
                 if(it && !loadingDialogFragment.isAdded)
-                    loadingDialogFragment.show(requireActivity().supportFragmentManager, "loader")
+                    fragmentManager.beginTransaction()
+                        .add(loadingDialogFragment, "loader")
+                        .commitNowAllowingStateLoss()
                 else if(!it && loadingDialogFragment.isAdded)
-                    loadingDialogFragment.dismissAllowingStateLoss()
+                    fragmentManager.beginTransaction()
+                        .remove(loadingDialogFragment)
+                        .commitNowAllowingStateLoss()
             }
         }
     }

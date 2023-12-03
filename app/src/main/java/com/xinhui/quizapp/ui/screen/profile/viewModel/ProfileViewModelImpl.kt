@@ -58,12 +58,14 @@ class ProfileViewModelImpl @Inject constructor(
 
     fun updateUserDetail(user: User, name: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.emit(true)
             if (name.length < 3)
                 _error.emit("At least 3 characters for a new username")
             else if(name != user.name){
                 userRepo.updateUserDetail(user.copy(name = name))
                 _success.emit("Successfully updated username.")
             }
+            _isLoading.emit(false)
         }
     }
 }

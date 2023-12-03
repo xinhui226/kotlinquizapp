@@ -41,7 +41,9 @@ class PlayQuizFragment : BaseFragment<FragmentPlayQuizBinding>() {
                 if (it < 0) {
                     binding.clQuiz.visibility = View.VISIBLE
                     binding.llCount.visibility = View.GONE
-                    val play = PlayQuiz(requireContext(),binding,viewModel.quiz.value)
+                    val play = PlayQuiz(requireContext(),binding,viewModel.quiz.value,{ score->
+                        viewModel.addScore(score)
+                    }){ navController.popBackStack() }
                     play.initViews()
                 }
                 else {

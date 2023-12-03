@@ -12,15 +12,19 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xinhui.quizapp.R
 import com.xinhui.quizapp.databinding.FragmentQuizDetailBinding
+import com.xinhui.quizapp.ui.adapter.StudentScoreAdapter
 import com.xinhui.quizapp.ui.screen.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class QuizDetailFragment : BaseFragment<FragmentQuizDetailBinding>() {
 
     override val viewModel: QuizDetailViewModel by viewModels()
     private val args: QuizDetailFragmentArgs by navArgs()
+    private lateinit var adapter: StudentScoreAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +39,6 @@ class QuizDetailFragment : BaseFragment<FragmentQuizDetailBinding>() {
         viewModel.getQuiz(args.quizId)
         setupAdapter()
         binding.run {
-            // TODO: if quiz taken and not the day yet, disabled btnTakeQuiz
             btnTakeQuiz.setOnClickListener {
                 val action = QuizDetailFragmentDirections.actionQuizDetailToPlayQuiz(args.quizId)
                 navController.navigate(action)
@@ -44,36 +47,43 @@ class QuizDetailFragment : BaseFragment<FragmentQuizDetailBinding>() {
                 val action = QuizDetailFragmentDirections.actionQuizDetailToEditQuiz(args.quizId)
                 navController.navigate(action)
             }
-            // TODO: rank if empty show no data
         }
     }
 
     override fun setupViewModelObserver() {
         super.setupViewModelObserver()
-        lifecycleScope.launch {
-            viewModel.quiz.collect{
-                binding.run {
+        binding.run {
+            lifecycleScope.launch {
+                viewModel.quiz.collect{
                     tvQuizName.text = it.name
                     tvQuizDate.text = it.date
+                    ivEdit.visibility = if (it.createdBy==viewModel.userId) View.VISIBLE else View.GONE
+                    btnTakeQuiz.visibility =
+                        if (viewModel.quiz.value.createdBy != viewModel.userId) View.VISIBLE
+                        else View.GONE
+                    val formattedCurrentDate = LocalDate.now()
+                        .format(DateTimeFormatter
+                            .ofPattern("yyyy-MM-dd"))
+                    btnTakeQuiz.isEnabled = it.date == formattedCurrentDate
                 }
             }
-        }
-        lifecycleScope.launch {
-            viewModel.isOwner.collect{
-                binding.run {
-                    if (it) ivEdit.visibility = View.VISIBLE
-                    else btnTakeQuiz.visibility = View.VISIBLE
+            lifecycleScope.launch {
+                viewModel.scores.collect{
+                    adapter.setNewRank(it)
+                    tvNoData.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+                    it.find { score -> score.userId == viewModel.userId }?.let {
+                        btnTakeQuiz.isEnabled = false
+                    }
                 }
             }
         }
     }
 
     private fun setupAdapter() {
-        // TODO: setup student score adapter
-//        val adapter = StudentScoreAdapter(emptyList())
-//        binding.rvRank.adapter = adapter
-//        binding.rvRank.layoutManager =
-//            LinearLayoutManager(requireContext())
+        adapter = StudentScoreAdapter(emptyList(),viewModel.userId)
+        binding.rvRank.adapter = adapter
+        binding.rvRank.layoutManager =
+            LinearLayoutManager(requireContext())
     }
 
 }

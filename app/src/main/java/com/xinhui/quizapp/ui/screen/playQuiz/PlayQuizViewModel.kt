@@ -1,9 +1,14 @@
 package com.xinhui.quizapp.ui.screen.playQuiz
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Question
 import com.xinhui.quizapp.data.model.Quiz
+import com.xinhui.quizapp.data.model.Score
+import com.xinhui.quizapp.data.model.User
 import com.xinhui.quizapp.data.repo.QuizRepo
+import com.xinhui.quizapp.data.repo.ScoreRepo
+import com.xinhui.quizapp.data.repo.UserRepo
 import com.xinhui.quizapp.ui.screen.base.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayQuizViewModel @Inject constructor(
-    private val quizRepo: QuizRepo
+    private val quizRepo: QuizRepo,
+    private val scoreRepo: ScoreRepo,
+    private val userRepo: UserRepo,
 ): BaseViewModel() {
     protected val _start: MutableStateFlow<Int> = MutableStateFlow(5)
     val start: StateFlow<Int> = _start
@@ -29,6 +36,16 @@ class PlayQuizViewModel @Inject constructor(
         groups= listOf(),
         isPublished = false))
     val quiz: StateFlow<Quiz> = _quiz
+    protected val _user = MutableStateFlow(User(name = "anonymous", email = "anonymous", group = emptyList()))
+    val user: StateFlow<User> = _user
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            safeApiCall { userRepo.getUser() }?.let { user ->
+                _user.emit(user)
+            }
+        }
+    }
 
     fun startCountdown(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -47,6 +64,19 @@ class PlayQuizViewModel @Inject constructor(
                 quizRepo.getQuiz(id)?.let{
                     _quiz.emit(it)
                 }
+            }
+        }
+    }
+
+    fun addScore(score: Score) {
+        Log.d("debugging", "addScore: ${score.copy(userId = _user.value.id!!, userName = _user.value.name, userGroups = _user.value.group)}")
+        viewModelScope.launch(Dispatchers.IO) {
+            safeApiCall {
+                scoreRepo.addScore(
+                    score.copy(
+                        userId = _user.value.id!!,
+                        userName = _user.value.name,
+                        userGroups = _user.value.group))
             }
         }
     }

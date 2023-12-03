@@ -7,69 +7,78 @@
     tools:context=".ui.screen.quizDetail.QuizDetailFragment"
     android:padding="12dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/tvQuizName"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Quiz name"
-            style="@style/TextAppearance.Material3.HeadlineLarge"
-            android:layout_marginTop="12dp"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Quiz name" />
+
         <ImageView
             android:id="@+id/ivEdit"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/tvQuizName"
+            android:layout_marginBottom="1dp"
             android:src="@drawable/ic_edit"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/tvQuizDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvQuizDate"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="2023 - 11 - 27"
-            style="@style/TextAppearance.Material3.TitleLarge"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/tvQuizName"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuizName"
+            tools:text="2023 - 11 - 27" />
+
         <TextView
             android:id="@+id/tvRank"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rank"
-            style="@style/TextAppearance.Material3.HeadlineMedium"
-            android:layout_centerInParent="true"
-            />
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray"
-            android:layout_below="@id/tvRank"
-            />
+            android:text="@string/rank"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            tools:layout_editor_absoluteX="-16dp" />
+
         <TextView
             android:id="@+id/tvNoData"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_marginTop="10dp"
             android:text="@string/no_data"
             android:textColor="@color/gray"
-            android:layout_below="@id/view"
-            android:layout_alignParentBottom="true"
-            />
+            app:layout_constraintEnd_toEndOf="@+id/rvRank"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRank" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/view"
-            android:layout_marginTop="10dp"
-            />
-    </RelativeLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRank"
+            android:layout_marginTop="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnTakeQuiz"
         android:layout_width="match_parent"

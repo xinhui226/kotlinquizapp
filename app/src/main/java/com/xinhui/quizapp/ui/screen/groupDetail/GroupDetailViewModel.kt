@@ -1,5 +1,6 @@
 package com.xinhui.quizapp.ui.screen.groupDetail
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Quiz
 import com.xinhui.quizapp.data.model.StudentGroup
@@ -32,10 +33,15 @@ class GroupDetailViewModel @Inject constructor(
     protected val _user = MutableStateFlow(User(name = "anonymous", email = "anonymous", group = emptyList()))
     val user: StateFlow<User> = _user
 
-    init {
+    fun getUser(id:String) {
         viewModelScope.launch(Dispatchers.IO) {
-            safeApiCall { userRepo.getUser() }?.let { user ->
+            _isLoading.emit(true)
+            safeApiCall { userRepo.getUser()?.let { user ->
+                Log.d("debugging", "getUser: $user")
                 _user.emit(user)
+                }
+            }.let {
+                getGroup(id)
             }
         }
     }
@@ -44,13 +50,15 @@ class GroupDetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall{
                 studentGroupRepo.getGroup(id)?.let{
+                    Log.d("debugging", "getGroup: $it")
                     _group.emit(it)
                 }
             }
+            _isLoading.emit(false)
         }
     }
 
-    fun getStudents(){
+    fun getStudents() {
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall {
                 _group.value.id?.let {id ->
@@ -89,6 +97,7 @@ class GroupDetailViewModel @Inject constructor(
 
     fun updateGroupName(name:String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.emit(true)
             _group.value.id?.let {id ->
                 safeApiCall{
                     studentGroupRepo.updateStudentGroup(
@@ -96,7 +105,9 @@ class GroupDetailViewModel @Inject constructor(
                         _group.value.copy(name = name))
                 }
                 _finish.emit(Unit)
+                _success.emit("Update successful.")
             }
+            _isLoading.emit(false)
         }
     }
 

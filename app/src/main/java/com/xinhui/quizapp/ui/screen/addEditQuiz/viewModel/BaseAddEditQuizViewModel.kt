@@ -17,10 +17,6 @@ abstract class BaseAddEditQuizViewModel: BaseViewModel(){
     protected val _questions: MutableStateFlow<List<Question>> = MutableStateFlow(emptyList())
     val questions: StateFlow<List<Question>> = _questions
 
-    init {
-        getGroups()
-    }
-
     abstract fun getGroups()
 
     fun quizValidation(quiz: Quiz):String? {

@@ -7,8 +7,8 @@
     android:orientation="vertical"
     android:background="@drawable/underline_bg"
     >
-    <LinearLayout
-        android:id="@+id/llScore"
+    <RelativeLayout
+        android:id="@+id/rlScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -17,20 +17,32 @@
         >
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Name"
+            android:text="@string/name"
             android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/tvIsYou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you"
+            android:textSize="16sp"
+            android:layout_toEndOf="@id/tvName"
+            android:layout_alignBaseline="@id/tvName"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/tvScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Score"
+            android:text="@string/score"
             android:textSize="16sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/tvName"
             />
-    </LinearLayout>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/llStudent"
         android:layout_width="match_parent"
@@ -66,6 +78,50 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/tvStudentName"
             android:layout_alignBottom="@id/tvStudentEmail"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rlAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:visibility="gone"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivProfilePic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:srcCompat="@drawable/ic_person"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/profile_pic"/>
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            tools:text="User 1"
+            android:layout_toEndOf="@id/ivProfilePic"
+            />
+        <TextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+            tools:text="a@a.com"
+            android:layout_below="@id/tvUserName"
+            android:layout_toEndOf="@id/ivProfilePic"
+            android:layout_marginTop="5dp"
+            />
+        <ImageView
+            android:id="@+id/ivAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/_add"
+            app:tint="@color/light_blue"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/tvUserEmail"
             />
     </RelativeLayout>
 </LinearLayout>

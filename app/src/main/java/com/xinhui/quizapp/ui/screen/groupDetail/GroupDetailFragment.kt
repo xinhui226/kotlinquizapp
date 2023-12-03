@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -34,16 +36,34 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getUser(args.groupId)
+    }
+
     override fun setupUIComponents() {
         super.setupUIComponents()
         setupAdapter()
-        viewModel.getGroup(args.groupId)
-        binding.btnAddStudent.setOnClickListener {
-            val action = GroupDetailFragmentDirections.actionGroupDetailToSearchUser(args.groupId)
-            navController.navigate(action)
-        }
-        binding.ivEdit.setOnClickListener {
-            showDialog()
+        binding.run {
+            btnAddStudent.setOnClickListener {
+                val action = GroupDetailFragmentDirections.actionGroupDetailToSearchUser(args.groupId)
+                navController.navigate(action)
+            }
+            ivEdit.setOnClickListener {
+                showDialog()
+            }
+            tvStudent.setOnClickListener {
+                (it as TextView).setTextColor(ContextCompat.getColor(requireContext(),R.color.zinc))
+                tvQuiz.setTextColor(ContextCompat.getColor(requireContext(),R.color.gray))
+                flStudents.visibility = View.VISIBLE
+                flGroups.visibility = View.GONE
+            }
+            tvQuiz.setOnClickListener {
+                (it as TextView).setTextColor(ContextCompat.getColor(requireContext(),R.color.zinc))
+                tvStudent.setTextColor(ContextCompat.getColor(requireContext(),R.color.gray))
+                flGroups.visibility = View.VISIBLE
+                flStudents.visibility = View.GONE
+            }
         }
     }
 
@@ -57,11 +77,9 @@ class GroupDetailFragment : BaseFragment<FragmentGroupDetailBinding>() {
                     viewModel.getStudents()
                     ivEdit.visibility = View.VISIBLE
                     tvStudent.visibility = View.VISIBLE
-                    flStudents.visibility = View.VISIBLE
                     btnAddStudent.visibility = View.VISIBLE
                 }else{
                     tvStudent.visibility = View.GONE
-                    flStudents.visibility = View.GONE
                     btnAddStudent.visibility = View.GONE
                     ivEdit.visibility = View.GONE
                 }

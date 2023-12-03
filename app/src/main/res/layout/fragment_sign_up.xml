@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.Material3.HeadlineMedium"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
         android:text="@string/register"
         />
     <com.google.android.material.textfield.TextInputLayout
@@ -102,14 +102,14 @@
             android:layout_height="wrap_content"
             android:text="@string/already_have_an_account"
             android:layout_gravity="center"
-            style="@style/TextAppearance.Material3.TitleSmall"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
             />
         <TextView
             android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            style="@style/TextAppearance.Material3.TitleSmall"
+            android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
             android:textColor="@color/material_dynamic_primary50"
             android:layout_marginStart="5dp"
             />

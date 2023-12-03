@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Question
 import com.xinhui.quizapp.data.model.Quiz
+import com.xinhui.quizapp.data.model.StudentGroup
 import com.xinhui.quizapp.data.repo.QuizRepo
 import com.xinhui.quizapp.data.repo.StudentGroupRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,19 +35,24 @@ class EditQuizViewModel @Inject constructor(
     override fun getGroups() {
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall{
-                studentGroupRepo.getGroups().collect{
-                    _groups.emit(it)
+                studentGroupRepo.getGroups().collect{groups->
+                    val quizGrp = mutableListOf<StudentGroup>()
+                    groups.map {
+                        if (_quiz.value.groups.contains(it.id)) quizGrp.add(it)
+                    }
+                    _groups.emit(quizGrp)
                 }
             }
         }
     }
 
-    fun getQuiz(id: String){
+    fun getQuiz(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.emit(true)
             safeApiCall{
                 quizRepo.getQuiz(id)?.let{
                     _quiz.emit(it)
+                    getGroups()
                 }
             }
             _isLoading.emit(false)

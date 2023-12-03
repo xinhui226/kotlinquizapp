@@ -14,6 +14,11 @@ class AddQuizViewModel @Inject constructor(
     private val studentGroupRepo: StudentGroupRepo,
     private val quizRepo: QuizRepo
 ): BaseAddEditQuizViewModel() {
+
+    init {
+        getGroups()
+    }
+
     override fun getGroups() {
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall{

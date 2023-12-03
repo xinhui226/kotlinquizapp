@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.xinhui.quizapp.R
 import com.xinhui.quizapp.data.model.Account
-import com.xinhui.quizapp.databinding.ItemGroupScoreQuizSimpleLayoutBinding
+import com.xinhui.quizapp.databinding.ItemStudentLayoutBinding
 
 class AccountAdapter(
     private var accounts: List<Account>,
@@ -18,7 +18,7 @@ class AccountAdapter(
         parent: ViewGroup,
         viewType: Int
     ): AccountAdapter.ItemAccountViewHolder {
-        val binding = ItemGroupScoreQuizSimpleLayoutBinding.inflate(
+        val binding = ItemStudentLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -37,7 +37,7 @@ class AccountAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ItemAccountViewHolder(private val binding: ItemGroupScoreQuizSimpleLayoutBinding) :
+    inner class ItemAccountViewHolder(private val binding: ItemStudentLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(account: Account) {
             binding.run {

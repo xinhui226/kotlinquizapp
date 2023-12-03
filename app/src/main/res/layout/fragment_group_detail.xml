@@ -46,66 +46,80 @@
                     android:layout_gravity="center"
                     android:visibility="gone"/>
             </LinearLayout>
-            <TextView
-                android:id="@+id/tvStudent"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.Material3.TitleLarge"
-                android:text="@string/student"
-                android:layout_marginTop="16dp"
-                android:textStyle="italic"
-                android:textColor="@color/gray"
-                />
-            <FrameLayout
-                android:id="@+id/flStudents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                >
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
                 <TextView
-                    android:id="@+id/tvStudentNoData"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/no_data"
-                    style="@style/TextAppearance.Material3.HeadlineSmall"
-                    android:textColor="@color/gray"
-                    android:gravity="center"
+                    android:id="@+id/tvQuiz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:text="@string/quiz"
+                    android:layout_marginTop="16dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/zinc"
                     />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvStudents"
+                <TextView
+                    android:id="@+id/tvStudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:text="@string/student"
+                    android:layout_marginTop="16dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/gray"
+                    />
+            </LinearLayout>
+            <FrameLayout
+                android:id="@+id/flStudentAndQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <FrameLayout
+                    android:id="@+id/flGroups"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
-            </FrameLayout>
-            <TextView
-                android:id="@+id/tvGroups"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.Material3.TitleLarge"
-                android:text="@string/quiz"
-                android:layout_marginTop="16dp"
-                android:textStyle="italic"
-                android:textColor="@color/gray"
-                />
-            <FrameLayout
-                android:id="@+id/flGroups"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:id="@+id/tvQuizNoData"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/no_data"
-                    style="@style/TextAppearance.Material3.HeadlineSmall"
-                    android:textColor="@color/gray"
-                    android:gravity="center"
-                    />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvQuizzes"
+                    android:layout_marginTop="10dp"
+                    >
+                    <TextView
+                        android:id="@+id/tvQuizNoData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/no_data"
+                        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                        android:textColor="@color/gray"
+                        android:gravity="center"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvQuizzes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/flStudents"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    >
+                    <TextView
+                        android:id="@+id/tvStudentNoData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/no_data"
+                        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                        android:textColor="@color/gray"
+                        android:gravity="center"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStudents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </FrameLayout>
             </FrameLayout>
         </LinearLayout>
     </ScrollView>

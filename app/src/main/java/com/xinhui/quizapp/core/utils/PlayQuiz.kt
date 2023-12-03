@@ -6,19 +6,22 @@ import android.graphics.Color
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.RadioButton
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.xinhui.quizapp.R
 import com.xinhui.quizapp.data.model.Quiz
+import com.xinhui.quizapp.data.model.Score
 import com.xinhui.quizapp.databinding.FragmentPlayQuizBinding
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 class PlayQuiz(
     private val context: Context,
     private var binding: FragmentPlayQuizBinding,
-    private val quiz: Quiz
+    private val quiz: Quiz,
+    private val finishQuiz:(Score)->Unit,
+    private val back:()->Unit,
 ) {
         private var countDownTimer: CountDownTimer? = null
         private var defaultColor: ColorStateList? = null
@@ -38,12 +41,12 @@ class PlayQuiz(
         private fun finishQuiz(){
             finished = true
             binding.nextQuestionBtn.text = "Finish"
-            score = correct
+            Log.d("debugging", "finishQuiz: $correct, ${questions.size}")
+            score = ((correct.toDouble()/questions.size.toDouble()) * 100.0).roundToInt()
             countDownTimer?.cancel()
-            binding.nextQuestionBtn.setOnClickListener {
-                Log.d("debugging", "finishQuiz: $score, $correct, $skip, $wrong")
-
-            }
+            finishQuiz(
+                Score(quizScore = score, correct, wrong, skip, "","",quiz.id!!, emptyList()))
+            binding.nextQuestionBtn.setOnClickListener { back() }
         }
 
         private fun showNextQuestion() {

@@ -3,6 +3,8 @@ package com.xinhui.quizapp.di
 import com.xinhui.quizapp.core.service.AuthService
 import com.xinhui.quizapp.data.repo.QuizRepo
 import com.xinhui.quizapp.data.repo.QuizRepoImpl
+import com.xinhui.quizapp.data.repo.ScoreRepo
+import com.xinhui.quizapp.data.repo.ScoreRepoImpl
 import com.xinhui.quizapp.data.repo.StudentGroupRepo
 import com.xinhui.quizapp.data.repo.StudentGroupRepoImpl
 import com.xinhui.quizapp.data.repo.UserRepo
@@ -33,5 +35,11 @@ class RepoModule{
     @Singleton
     fun provideQuizRepo(authService: AuthService,userRepo: UserRepo): QuizRepo {
         return QuizRepoImpl(authService,userRepo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideScoreRepo(authService: AuthService,userRepo: UserRepo): ScoreRepo {
+        return ScoreRepoImpl(authService,userRepo)
     }
 }

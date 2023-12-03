@@ -55,4 +55,7 @@
     <string name="search_email_or_name">Search email or name</string>
     <string name="no_account_found">No account found.</string>
     <string name="submit">Submit</string>
+    <string name="rank">Rank</string>
+    <string name="you">(YOU)</string>
+    <string name="score">Score</string>
 </resources>

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface QuizRepo {
     suspend fun getOwnQuizzes(): Flow<List<Quiz>>
     suspend fun getQuizOfTheDay(): Flow<List<Quiz>>
+    suspend fun getQuizzes(): Flow<List<Quiz>>
     suspend fun getQuiz(id: String): Quiz?
     suspend fun addNewQuiz(quiz: Quiz)
     suspend fun updateQuiz(id: String,quiz: Quiz)
