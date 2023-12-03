@@ -81,6 +81,17 @@
             />
     </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSignInWithGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cornerRadius="8dp"
+        android:drawableLeft="@drawable/google"
+        android:backgroundTint="@color/white"
+        android:text="@string/sign_up_with_google"
+        android:textColor="@color/blue" />
+
         <Space
             android:layout_width="wrap_content"
             android:layout_height="0dp"

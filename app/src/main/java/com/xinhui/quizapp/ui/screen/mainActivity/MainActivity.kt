@@ -12,6 +12,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.xinhui.quizapp.R
 import com.xinhui.quizapp.databinding.ActivityMainBinding
 import com.xinhui.quizapp.ui.screen.mainActivity.viewModel.MainActivityViewModel
@@ -32,6 +35,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.setupGoogleClient(this)
+        viewModel.getCurrUser()
+        viewModel.getProfileUri()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController= navHostFragment.navController
