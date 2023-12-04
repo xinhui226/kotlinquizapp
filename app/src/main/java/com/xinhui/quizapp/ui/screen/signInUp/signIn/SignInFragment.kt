@@ -1,13 +1,17 @@
 package com.xinhui.quizapp.ui.screen.signInUp.signIn
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -16,10 +20,10 @@ import com.xinhui.quizapp.R
 import com.xinhui.quizapp.data.model.User
 import com.xinhui.quizapp.databinding.FragmentSignInBinding
 import com.xinhui.quizapp.ui.screen.base.BaseSignInUpFragment
-import com.xinhui.quizapp.ui.screen.mainActivity.MainActivity
 import com.xinhui.quizapp.ui.screen.signInUp.signIn.viewModel.SignInViewModelImpl
 import com.xinhui.quizapp.ui.screen.signInUp.signUp.SignUpFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class SignInFragment : BaseSignInUpFragment<FragmentSignInBinding>() {
@@ -88,9 +92,24 @@ class SignInFragment : BaseSignInUpFragment<FragmentSignInBinding>() {
                 if (task.isSuccessful) {
                     val user = viewModel.getAuth().currentUser
                     viewModel.addUser(
-                        User(name = user?.displayName ?: "anonymous", email = user?.email ?: "anonymous", group = emptyList()),
+                        User(name = user?.displayName ?: "anonymous",
+                            email = user?.email ?: "anonymous",
+                            group = emptyList()),
                         user?.photoUrl
-                        )
+                    )
+                    user?.photoUrl?.let {
+                        Glide.with(requireContext())
+                            .downloadOnly()
+                            .load(it)
+                            .into(object : CustomTarget<File>() {
+                                override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                                    val imageUri: Uri = Uri.fromFile(resource)
+                                    viewModel.saveProfileImg(imageUri)
+                                }
+                                override fun onLoadCleared(placeholder: Drawable?) {
+                                }
+                            })
+                    }
                 } else {
                     Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show()
                 }

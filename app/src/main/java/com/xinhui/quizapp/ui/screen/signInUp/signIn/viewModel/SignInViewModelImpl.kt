@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModelImpl @Inject constructor(
     private val authService: AuthService,
+    private val userRepo: UserRepo,
     private val storageService: StorageService,
-    private val userRepo: UserRepo
 ) : BaseViewModel(),SignInViewModel {
 
     fun getAuth(): FirebaseAuth {
@@ -38,24 +38,32 @@ class SignInViewModelImpl @Inject constructor(
         }
     }
 
-    override fun addUser(user: User, profileUri: Uri?) {
+    override fun addUser(user: User,photoUri: Uri?) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.emit(true)
-            Log.d("debugging", "addUser: $user, $profileUri")
+            Log.d("debugging", "addUser: $user")
             val existUserData = safeApiCall { userRepo.getUser() }
             Log.d("debugging", "exist user: $existUserData")
             if (existUserData == null){
                 safeApiCall { userRepo.addNewUser(user) }
-                profileUri?.let{ uri ->
-                    authService.getUid().let {
-                        val name = "$it.jpg"
-                        storageService.addImage(name, uri)
-                    }
-                }
             }
-            _isLoading.emit(false)
-            _success.emit("")
+            if (photoUri == null) {
+                _isLoading.emit(false)
+                _success.emit("")
+            }
         }
     }
 
+    override fun saveProfileImg(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.emit(true)
+            authService.getUid().let {
+                val name = "$it.jpg"
+                val profImg = storageService.getImage("$it.jpg")
+                if (profImg == null) storageService.addImage(name, uri)
+                _success.emit("")
+                _isLoading.emit(false)
+            }
+        }
+    }
 }
