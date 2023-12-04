@@ -31,9 +31,10 @@ class SignInViewModelImpl @Inject constructor(
                 _error.emit("Please fill all the field")
             else{
                 _isLoading.emit(true)
-                safeApiCall { authService.signIn(email,pwd) }
+                safeApiCall { authService.signIn(email,pwd)?.let {
+                    _success.emit("")
+                } }
                 _isLoading.emit(false)
-                _success.emit("")
             }
         }
     }

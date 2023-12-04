@@ -49,6 +49,7 @@ class AddQuizFragment : BaseAddEditQuizFragment() {
                 if (j != groupList.size - 1) stringBuilder.append(", ")
             }
             binding.tvSelectGroup.text = stringBuilder.toString()
+            groupList.clear()
         }
         builder.setNegativeButton("Cancel") { dialogInterface, _ ->
             selectedGroup = initialSelectedGroup.copyOf()

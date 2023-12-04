@@ -30,7 +30,10 @@ abstract class BaseAddEditQuizViewModel: BaseViewModel(){
         else if (quiz.titles.isEmpty() ||
             quiz.options.isEmpty() ||
             quiz.answers.isEmpty() ||
-            quiz.seconds.isEmpty())
+            quiz.seconds.isEmpty() ||
+            quiz.titles.contains("") ||
+            quiz.options.contains("") ||
+            quiz.answers.contains(""))
             "Please make sure all fields are filled."
         else if (quiz.seconds.contains(0))
             "Invalid answer question seconds."
