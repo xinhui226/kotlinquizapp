@@ -53,8 +53,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 this@MainActivity.finish()
             } else {
-                navController.navigate(
-                    TabContainerFragmentDirections.actionTabContainerToDashboardFragment())
+                navController.navigate(R.id.action_global_dashboard)
                 drawerLayout.close()
             }
             false
