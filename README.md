@@ -13,8 +13,6 @@ Introduction
 
 Features
 
-Getting Started
-
 Future Plans
 
 Contact Us
