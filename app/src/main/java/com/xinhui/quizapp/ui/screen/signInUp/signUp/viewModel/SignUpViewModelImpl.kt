@@ -24,10 +24,10 @@ class SignUpViewModelImpl @Inject constructor(
                 val user = safeApiCall { authService.signUp(email,pwd) }
                 if(user != null){
                     safeApiCall {
-                        userRepo.addNewUser(User(name=name, email = email, group = emptyList()))
+                        userRepo.addNewUser(User(name=name, email = email, group = emptyList())).let {
+                            _success.emit("Register successfully") }
                     }
                     _isLoading.emit(false)
-                    _success.emit("Register successfully")
                 }
             }
             else _error.emit(error)
@@ -43,7 +43,7 @@ class SignUpViewModelImpl @Inject constructor(
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
             "Invalid email format"
         else if(name.length < 3)
-            "Password must be at least 3 characters"
+            "Username must be at least 3 characters"
         else if(pwd.length <= 5)
             "Password must be at least 6 characters"
         else if(pwd != confirmPwd)

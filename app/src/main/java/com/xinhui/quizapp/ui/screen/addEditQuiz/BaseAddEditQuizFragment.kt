@@ -14,6 +14,7 @@ import android.widget.HorizontalScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -131,10 +132,21 @@ abstract class BaseAddEditQuizFragment:BaseFragment<FragmentAddEditQuizBinding>(
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent())
     { uri: Uri? ->
         uri?.let {
-            val csvFile = requireActivity().contentResolver.openInputStream(it)
-            val isr = InputStreamReader(csvFile)
-            BufferedReader(isr).readLines().let { lines ->
-                viewModel.readCSV(lines.subList(1,lines.size))
+            val documentFile = DocumentFile.fromSingleUri(requireContext(), it)
+            if (documentFile != null && documentFile.isFile) {
+                val fileExtension = documentFile.name?.substringAfterLast(".", "")
+                if (fileExtension.equals("csv", ignoreCase = true)) {
+                    binding.tvFilename.visibility = View.VISIBLE
+                    binding.tvFilename.text = documentFile.name.toString()
+                    val csvFile = requireActivity().contentResolver.openInputStream(it)
+                    val isr = InputStreamReader(csvFile)
+                    BufferedReader(isr).readLines().let { lines ->
+                        viewModel.readCSV(lines.subList(1, lines.size))
+                    }
+                }
+                else {
+                    showSnackbar("Invalid file uploaded, only CSV file acceptable", true)
+                }
             }
         }
     }

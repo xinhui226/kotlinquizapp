@@ -10,9 +10,6 @@
         android:label="Quiz App"
         tools:layout="@layout/fragment_tab_container" >
         <action
-            android:id="@+id/action_tabContainer_to_dashboardFragment"
-            app:destination="@id/dashboardFragmentFragment" />
-        <action
             android:id="@+id/action_tabContainer_to_quizDetail"
             app:destination="@id/quizDetailFragment" />
         <action
@@ -110,4 +107,7 @@
         <argument android:name="quizId"
             app:argType="string" />
     </fragment>
+    <action
+        android:id="@+id/action_global_dashboard"
+        app:destination="@id/dashboardFragmentFragment" />
 </navigation>

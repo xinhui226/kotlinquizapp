@@ -57,10 +57,12 @@ class QuizDetailFragment : BaseFragment<FragmentQuizDetailBinding>() {
                 viewModel.quiz.collect{
                     tvQuizName.text = it.name
                     tvQuizDate.text = it.date
-                    ivEdit.visibility = if (it.createdBy==viewModel.userId) View.VISIBLE else View.GONE
-                    btnTakeQuiz.visibility =
-                        if (viewModel.quiz.value.createdBy != viewModel.userId) View.VISIBLE
-                        else View.GONE
+                    if (it.createdBy != null){
+                        ivEdit.visibility = if (it.createdBy==viewModel.userId) View.VISIBLE else View.GONE
+                        btnTakeQuiz.visibility =
+                            if (viewModel.quiz.value.createdBy != viewModel.userId) View.VISIBLE
+                            else View.GONE
+                    }
                     val formattedCurrentDate = LocalDate.now()
                         .format(DateTimeFormatter
                             .ofPattern("yyyy-MM-dd"))

@@ -1,19 +1,18 @@
 package com.xinhui.quiz.core.service
 
-import android.util.Log
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.xinhui.quizapp.core.service.AuthService
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import java.util.concurrent.Flow
 
 class AuthServiceImpl(
     val auth: FirebaseAuth = FirebaseAuth.getInstance(),
 ): AuthService {
+
+    override fun returnAuth(): FirebaseAuth {
+        return auth
+    }
     override suspend fun signUp(email: String, password: String): FirebaseUser? {
         val result = auth.createUserWithEmailAndPassword(email, password).await()
         return result.user

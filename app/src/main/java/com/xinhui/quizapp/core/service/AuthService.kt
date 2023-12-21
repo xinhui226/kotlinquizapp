@@ -1,9 +1,11 @@
 package com.xinhui.quizapp.core.service
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 
 interface AuthService {
+    fun returnAuth(): FirebaseAuth
     suspend fun signUp(email:String, password:String):FirebaseUser?
     suspend fun signIn(email:String, password:String):FirebaseUser?
     fun getCurrUser():FirebaseUser?
