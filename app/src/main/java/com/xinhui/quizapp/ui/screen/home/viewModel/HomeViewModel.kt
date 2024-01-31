@@ -1,6 +1,5 @@
 package com.xinhui.quizapp.ui.screen.home.viewModel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Quiz
 import com.xinhui.quizapp.data.model.StudentGroup
@@ -51,7 +50,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall{
                 studentGroupRepo.getAllGroups().collect{groups ->
-                    Log.d("debugging", "getGroups: $groups")
                     val userGrp = mutableListOf<StudentGroup>()
                     groups.map {
                         if (userRepo.getUser()?.group?.contains(it.id) == true) userGrp.add(it)

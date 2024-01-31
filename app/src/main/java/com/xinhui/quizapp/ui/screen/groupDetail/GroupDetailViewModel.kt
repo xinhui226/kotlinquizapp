@@ -1,6 +1,5 @@
 package com.xinhui.quizapp.ui.screen.groupDetail
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Quiz
 import com.xinhui.quizapp.data.model.StudentGroup
@@ -37,7 +36,6 @@ class GroupDetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.emit(true)
             safeApiCall { userRepo.getUser()?.let { user ->
-                Log.d("debugging", "getUser: $user")
                 _user.emit(user)
                 }
             }.let {
@@ -50,7 +48,6 @@ class GroupDetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall{
                 studentGroupRepo.getGroup(id)?.let{
-                    Log.d("debugging", "getGroup: $it")
                     _group.emit(it)
                 }
             }

@@ -1,6 +1,5 @@
 package com.xinhui.quizapp.ui.screen.base.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -22,7 +21,6 @@ abstract class BaseViewModel:ViewModel() {
             e.printStackTrace()
             _error.emit(e.message ?: "Something went wrong")
             _isLoading.emit(false)
-            Log.d("debugging", "safeApiCall: ${e.message}")
             null
         }
     }

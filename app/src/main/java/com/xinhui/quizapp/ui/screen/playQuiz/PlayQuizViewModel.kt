@@ -1,8 +1,6 @@
 package com.xinhui.quizapp.ui.screen.playQuiz
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.xinhui.quizapp.data.model.Question
 import com.xinhui.quizapp.data.model.Quiz
 import com.xinhui.quizapp.data.model.Score
 import com.xinhui.quizapp.data.model.User
@@ -69,7 +67,6 @@ class PlayQuizViewModel @Inject constructor(
     }
 
     fun addScore(score: Score) {
-        Log.d("debugging", "addScore: ${score.copy(userId = _user.value.id!!, userName = _user.value.name, userGroups = _user.value.group)}")
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall {
                 scoreRepo.addScore(

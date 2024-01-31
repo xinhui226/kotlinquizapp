@@ -1,7 +1,6 @@
 package com.xinhui.quizapp.ui.screen.signInUp.signIn.viewModel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.xinhui.quizapp.core.service.AuthService
@@ -42,9 +41,7 @@ class SignInViewModelImpl @Inject constructor(
     override fun addUser(user: User,photoUri: Uri?) {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.emit(true)
-            Log.d("debugging", "addUser: $user")
             val existUserData = safeApiCall { userRepo.getUser() }
-            Log.d("debugging", "exist user: $existUserData")
             if (existUserData == null){
                 safeApiCall { userRepo.addNewUser(user) }
             }

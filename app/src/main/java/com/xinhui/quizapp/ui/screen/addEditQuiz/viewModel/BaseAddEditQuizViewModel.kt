@@ -1,6 +1,5 @@
 package com.xinhui.quizapp.ui.screen.addEditQuiz.viewModel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Question
 import com.xinhui.quizapp.data.model.Quiz
@@ -42,7 +41,6 @@ abstract class BaseAddEditQuizViewModel: BaseViewModel(){
 
     fun readCSV(lines:List<String>) {
         viewModelScope.launch {
-            Log.d("debugging", "readCSV: $lines")
             lines.map { line ->
                 val question = line.split(",")
                 if(question.size < 7) {

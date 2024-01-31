@@ -14,7 +14,6 @@ data class StudentGroup(
 
     companion object{
         fun fromHash(hash:Map<String,Any>):StudentGroup{
-//            Log.d("debugging", "fromHash: ${hash["quizzes"] as ArrayList<*>?}")
             return StudentGroup(
                 id = hash["id"].toString(),
                 name = hash["name"].toString(),

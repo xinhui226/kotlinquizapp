@@ -54,10 +54,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override fun setupUIComponents() {
         super.setupUIComponents()
         binding.run {
-            btnLogout.setOnClickListener {
-                mainViewModel.logout()
+            ivLogout.setOnClickListener {
                 val intent = Intent(requireActivity(), SignInUpActivity::class.java)
                 startActivity(intent)
+                mainViewModel.logout()
                 requireActivity().finish()
             }
             icEditProfile.setOnClickListener {

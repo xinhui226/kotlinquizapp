@@ -31,11 +31,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@id/tvQuestionNo"
+            android:inputType="text"
             android:hint="@string/question"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:autofillHints="Question"/>
     </LinearLayout>
 
     <RadioGroup
@@ -57,7 +58,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/option_1" />
+                android:hint="@string/option_1"
+                android:autofillHints="option 1"
+                android:inputType="text" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +77,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/option_2" />
+                android:hint="@string/option_2"
+                android:autofillHints="option 2"
+                android:inputType="text"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,7 +96,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/option_3" />
+                android:hint="@string/option_3"
+                android:autofillHints="option 3"
+                android:inputType="text"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,7 +115,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/option_4" />
+                android:hint="@string/option_4"
+                android:autofillHints="option 4"
+                android:inputType="text"/>
         </LinearLayout>
     </RadioGroup>
 
@@ -124,7 +133,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Time to answer :"
+            android:text="@string/time_to_answer"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"/>

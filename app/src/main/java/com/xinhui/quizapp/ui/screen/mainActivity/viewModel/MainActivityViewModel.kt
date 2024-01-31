@@ -1,10 +1,7 @@
 package com.xinhui.quizapp.ui.screen.mainActivity.viewModel
 
-import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -16,8 +13,6 @@ import com.xinhui.quizapp.core.service.StorageService
 import com.xinhui.quizapp.data.model.User
 import com.xinhui.quizapp.data.repo.UserRepo
 import com.xinhui.quizapp.ui.screen.base.viewModel.BaseViewModel
-import com.xinhui.quizapp.ui.screen.mainActivity.MainActivity
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

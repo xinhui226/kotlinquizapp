@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.xinhui.quizapp.R
-import com.xinhui.quizapp.databinding.FragmentHomeBinding
 import com.xinhui.quizapp.databinding.FragmentTabContainerBinding
 import com.xinhui.quizapp.ui.adapter.FragmentAdapter
 import com.xinhui.quizapp.ui.screen.base.BaseFragment
@@ -40,15 +40,15 @@ class TabContainerFragment : BaseFragment<FragmentTabContainerBinding>() {
             TabLayoutMediator(tlTabs,vpContainer){tab,position ->
                 when(position){
                     0-> {
-                        tab.text = "Home"
+                        tab.text = ContextCompat.getString(requireContext(), R.string.home)
                         tab.setIcon(R.drawable.ic_home)
                     }
                     2-> {
-                        tab.text = "Profile"
+                        tab.text = ContextCompat.getString(requireContext(), R.string.profile)
                         tab.setIcon(R.drawable.ic_person)
                     }
                     else-> {
-                        tab.text = "History"
+                        tab.text = ContextCompat.getString(requireContext(), R.string.history)
                         tab.setIcon(R.drawable.ic_history)
                     }
                 }

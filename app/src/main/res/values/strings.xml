@@ -34,6 +34,8 @@
     <string name="existing_password">Existing Password</string>
     <string name="new_password">New Password</string>
     <string name="edit">Edit</string>
+    <string name="update">Update</string>
+    <string name="finish">Finish</string>
     <string name="profile_pic">Profile Pic</string>
     <string name="create_account">Create Account</string>
     <string name="search">Search</string>
@@ -59,4 +61,7 @@
     <string name="you">(YOU)</string>
     <string name="score">Score</string>
     <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="time_to_answer">Time to answer :</string>
+    <string name="question_no">%1$s/%2$s</string>
+    <string name="edit_profile_pic">Edit Profile Pic</string>
 </resources>

@@ -1,18 +1,14 @@
 package com.xinhui.quizapp.ui.screen.addEditQuiz
 
-import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.HorizontalScrollView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.viewModels
@@ -66,7 +62,6 @@ abstract class BaseAddEditQuizFragment:BaseFragment<FragmentAddEditQuizBinding>(
             }
             ivQuestionMark.setOnClickListener { helpDialog() }
             btnAdd.setOnClickListener {
-                Log.d("debugging", "setupUIComponents: btn click")
                 val titles = mutableListOf<String>()
                 val options = mutableListOf<String>()
                 val answers = mutableListOf<String>()

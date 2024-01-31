@@ -109,5 +109,7 @@
     </fragment>
     <action
         android:id="@+id/action_global_dashboard"
-        app:destination="@id/dashboardFragmentFragment" />
+        app:destination="@id/dashboardFragmentFragment"
+        app:popUpTo="@id/dashboardFragmentFragment"
+        app:popUpToInclusive="false" />
 </navigation>

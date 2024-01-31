@@ -68,9 +68,9 @@ class DashboardFragmentFragment : BaseFragment<FragmentDashboardBinding>() {
                 findNavController().navigate(
                     DashboardFragmentFragmentDirections.actionDashboardToManageQuiz())
             else -> {
-                viewModel.logout()
                 val intent = Intent(requireActivity(), SignInUpActivity::class.java)
                 startActivity(intent)
+                viewModel.logout()
                 requireActivity().finish()
             }
         }

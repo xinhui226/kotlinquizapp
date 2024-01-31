@@ -1,7 +1,6 @@
 package com.xinhui.quizapp.ui.screen.addEditQuiz
 
 import android.R
-import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -20,7 +19,7 @@ class EditQuizFragment : BaseAddEditQuizFragment() {
         super.setupUIComponents()
         viewModel.getQuiz(args.quizId)
         binding.run{
-            btnAdd.text = "Update"
+            btnAdd.text = ContextCompat.getString(requireContext(),com.xinhui.quizapp.R.string.update)
             tvSelectGroup.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.darker_gray))
         }
     }

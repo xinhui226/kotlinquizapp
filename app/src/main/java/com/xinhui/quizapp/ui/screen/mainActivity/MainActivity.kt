@@ -12,14 +12,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.xinhui.quizapp.R
 import com.xinhui.quizapp.databinding.ActivityMainBinding
 import com.xinhui.quizapp.ui.screen.mainActivity.viewModel.MainActivityViewModel
 import com.xinhui.quizapp.ui.screen.signInUp.SignInUpActivity
-import com.xinhui.quizapp.ui.screen.tabContainer.TabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,9 +44,9 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setupWithNavController(navController)
         binding.navigationView.setNavigationItemSelectedListener { item ->
             if(item.itemId == R.id.itemLogout) {
-                viewModel.logout()
                 val intent = Intent(this@MainActivity, SignInUpActivity::class.java)
                 startActivity(intent)
+                viewModel.logout()
                 this@MainActivity.finish()
             } else {
                 navController.navigate(R.id.action_global_dashboard)

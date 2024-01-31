@@ -47,8 +47,7 @@ class ProfileViewModelImpl @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.emit(true)
             authService.getUid().let {
-                val name = "$it.jpg"
-                storageService.addImage(name,uri).let {
+                storageService.addImage("$it.jpg",uri).let {
                     _finish.emit(Unit)
                 }
             }

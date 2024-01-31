@@ -1,7 +1,6 @@
 package com.xinhui.quizapp.ui.screen.playQuiz
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.xinhui.quizapp.core.utils.PlayQuiz
 import com.xinhui.quizapp.databinding.FragmentPlayQuizBinding
 import com.xinhui.quizapp.ui.screen.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,7 +51,6 @@ class PlayQuizFragment : BaseFragment<FragmentPlayQuizBinding>() {
         }
         lifecycleScope.launch {
             viewModel.quiz.collect{
-                Log.d("debugging", "setupViewModelObserver: $it")
                 if (it.isPublished) viewModel.startCountdown()
             }
         }

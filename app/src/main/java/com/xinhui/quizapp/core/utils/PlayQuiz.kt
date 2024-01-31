@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.CountDownTimer
-import android.util.Log
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -40,8 +39,7 @@ class PlayQuiz(
 
         private fun finishQuiz(){
             finished = true
-            binding.nextQuestionBtn.text = "Finish"
-            Log.d("debugging", "finishQuiz: $correct, ${questions.size}")
+            binding.nextQuestionBtn.text = ContextCompat.getString(context,R.string.finish)
             score = ((correct.toDouble()/questions.size.toDouble()) * 100.0).roundToInt()
             countDownTimer?.cancel()
             finishQuiz(
@@ -55,7 +53,8 @@ class PlayQuiz(
                 startCountDown(seconds[qIndex])
                 binding.apply {
                     if (updateQueNo < questions.size) {
-                        tvNoOfQues.text = "${updateQueNo + 1}/${questions.size}"
+                        tvNoOfQues.text =
+                            context.getString(R.string.question_no, (updateQueNo + 1).toString(), (questions.size).toString())
                         updateQueNo++
                     }
                     if (qIndex <= questions.size - 1) {
@@ -126,7 +125,8 @@ class PlayQuiz(
                         }
                     }
                 }
-                tvNoOfQues.text = "$updateQueNo/${questions.size}"
+                tvNoOfQues.text =
+                    context.getString(R.string.question_no, (updateQueNo).toString(), (questions.size).toString())
                 tvQuestion.text = questions[qIndex]
                 defaultColor = quizTimer.textColors
                 startCountDown(quiz.seconds[qIndex])
