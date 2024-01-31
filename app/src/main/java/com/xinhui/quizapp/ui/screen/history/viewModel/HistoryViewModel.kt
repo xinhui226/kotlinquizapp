@@ -1,10 +1,10 @@
 package com.xinhui.quizapp.ui.screen.history.viewModel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xinhui.quizapp.data.model.Quiz
 import com.xinhui.quizapp.data.repo.QuizRepo
 import com.xinhui.quizapp.data.repo.ScoreRepo
+import com.xinhui.quizapp.data.repo.UserRepo
 import com.xinhui.quizapp.ui.screen.base.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +17,10 @@ import javax.inject.Inject
 class HistoryViewModel @Inject constructor(
     private val scoreRepo: ScoreRepo,
     private val quizRepo: QuizRepo,
+    private val userRepo: UserRepo
 ) : BaseViewModel() {
 
     protected val _studentHistoryQuizId: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
-    val studentHistoryQuizId: StateFlow<List<String>> = _studentHistoryQuizId
     protected val _quizzes: MutableStateFlow<List<Quiz>> = MutableStateFlow(emptyList())
     val quizzes: StateFlow<List<Quiz>> = _quizzes
 
@@ -42,12 +42,14 @@ class HistoryViewModel @Inject constructor(
     private fun getQuizzes() {
         viewModelScope.launch(Dispatchers.IO) {
             safeApiCall{
-                quizRepo.getQuizzes().collect{quizzes ->
-                    val listOfQuiz = mutableListOf<Quiz>()
-                    quizzes.map {
-                        if (_studentHistoryQuizId.value.contains(it.id)) listOfQuiz.add(it)
+                if (userRepo.getUser()?.group?.isNotEmpty() == true){
+                    quizRepo.getQuizzes().collect{quizzes ->
+                        val listOfQuiz = mutableListOf<Quiz>()
+                        quizzes.map {
+                            if (_studentHistoryQuizId.value.contains(it.id)) listOfQuiz.add(it)
+                        }
+                        _quizzes.emit(listOfQuiz)
                     }
-                    _quizzes.emit(listOfQuiz)
                 }
             }
         }
